@@ -25,6 +25,7 @@ public class Esutil {
 
 		/**
 		 * 获取客户端
+		 * lishuai集群的名称
 		 * @return
 		 */
 		public static  Client getClient() {
@@ -42,9 +43,15 @@ public class Esutil {
 			}
 			return client;
 		}
-	
-	
-	
+
+
+	/**
+	 * 添加索引数据
+	 * @param index
+	 * @param type
+	 * @param Doc
+	 * @return
+	 */
 	
 	public static String addIndex(String index,String type,Doc Doc){
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
