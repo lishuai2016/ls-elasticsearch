@@ -1,1 +1,3 @@
 司法目录项目
+这个目录是司法鉴定的service端，和项目ls-dubbo-consumer的web端配合使用
+
