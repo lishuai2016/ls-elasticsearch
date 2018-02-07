@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ls.es.samples.dao.CasOrgPubMapper">
+	<sql id="Base_Column_List">
+	  a.id,
+	  a.org_id as "orgId",
+	  a.fullname,
+	  a.credit_code as "creditCode",
+	  a.province,
+	  a.city,
+	  a.addr,
+	  a.legal_person as "legalPerson",
+	  a.contact_persion as "contactPersion",
+	  a.contact_tel as "contactTel",
+	  a.authorized_time as "authorizedTime",
+	  a.license_number as "licenseNumber",
+	  a.given_org as "givenOrg",
+	  a.given_time as "givenTime",
+	  a.valid_start as "validStart",
+	  a.valid_end as "validEnd",
+	  a.permit_file as "permitFile",
+	  a.website,
+	  a.registered_capita as "registeredCapita",
+	  a.intro,
+	  a.supervision_org as "supervisionOrg",
+	  a.complaint_tel as "complaintTel",
+	  a.complaint_addr as "complaintAddr",
+	  a.work_range as "workRange",
+	  a.search_keywords as "searchKeywords",
+	  a.lasty_count as "lastyCount",
+	  a.lasty_org as "lastyOrg",
+	  a.is_countryc as "isCountryc",
+	  a.countryc_time as "countrycTime",
+	  a.countryc_item as "countrycItem",
+	  a.countryc_file as "countrycFile",
+	  a.is_provincec as "isProvincec",
+	  a.provincec_time as "provincecTime",
+	  a.provincec_item as "provincecItem",
+	  a.provincec_file as "provincecFile",
+	  a.is_orgc as "isOrgc",
+	  a.orgc_time as "orgcTime",
+	  a.orgc_item as "orgcItem",
+	  a.orgc_file as "orgcFile",
+	  a.is_lastyac as "isLastyac",
+	  a.lastyac_time as "lastyacTime",
+	  a.lastyac_item as "lastyacItem",
+	  a.lastyac_result as "lastyacResult",
+	  a.lastyac_file as "lastyacFile",
+	  a.last_update_time as "lastUpdateTime",
+	  a.checked_status as "checkedStatus",
+	  a.lastyac
+	</sql>
+	<select id="findOrgById" resultType="ls.es.samples.entity.CasOrgPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_org_pub a
+		where a.id =#{id}
+	</select>
+	<select id="findOrgByOrgId" resultType="ls.es.samples.entity.CasOrgPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_org_pub a
+		where a.org_id =#{orgId}
+	</select>
+	<select id="findAllOrg" resultType="ls.es.samples.entity.CasOrgPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_org_pub a
+		where a.checked_status != 2
+	</select>
+	<select id="countOrg" resultType="int">
+		select
+		count(*)
+		from cas_org_pub a
+		where a.checked_status != 2
+	</select>
+	<select id="countByProvince" resultType="ls.es.samples.entity.CountByProvince" parameterType="String">
+		select
+		o.province,COUNT(DISTINCT o.fullname) as "orgSize", COUNT(*) as "userSize" 
+		from cas_org_pub o 
+		RIGHT JOIN cas_user_pub u ON o.org_id = u.org_id 
+		where o.checked_status != 2 and o.province  like CONCAT('%','${_parameter}','%')
+	</select>
+	
+	<!-- <select id="findOrgByOrgId" resultType="ls.es.samples.entity.CasOrgPub">
+	select
+		<include refid="Base_Column_List" />
+		from cas_org_pub a
+		where a.org_id =#{orgId}
+	</select> -->
+</mapper>

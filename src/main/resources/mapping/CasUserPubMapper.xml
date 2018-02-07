@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ls.es.samples.dao.CasUserPubMapper">
+	<sql id="Base_Column_List">
+	  u.id,
+	  u.user_id as "userId",
+	  u.realname,
+	  u.sex,
+	  u.birth,
+	  u.user_type as "userType",
+	  u.degree,
+	  u.title,
+	  u.zyzh,
+	  u.work_time as "workTime",
+	  u.work_type as "workType",
+	  u.work_range as "workRange",
+	  u.search_keywords as "searchKeywords",
+	  u.lasty_count as "lastyCount",
+	  u.my_honor as "myHonor",
+	  u.my_punishments as "myPunishments",
+	  u.intro,
+	  u.work_time_end as "workTimeEnd",
+	  u.idcard,
+	  u.regist_time as "registTime",
+	  u.org_id as "orgId",
+	  o.id as "orgPubId",
+	  o.fullname as "orgName",
+	  o.province as "province",
+	  o.city as "city",
+	  o.addr as "addr"
+	</sql>
+	<select id="countUser" resultType="int">
+		select
+		count(*)
+		from cas_user_pub u
+		LEFT JOIN cas_org_pub o ON u.org_id = o.org_id 
+		where o.checked_status != 2
+	</select>
+	
+	<select id="findUserById" resultType="ls.es.samples.entity.CasUserPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_user_pub u
+		LEFT JOIN cas_org_pub o ON u.org_id = o.org_id 
+		where u.id=#{id}
+	</select>
+	<select id="findUserByOrgPubId" resultType="ls.es.samples.entity.CasUserPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_user_pub u
+		LEFT JOIN cas_org_pub o ON u.org_id = o.org_id 
+		where o.checked_status != 2 and o.id = #{id}
+	</select>
+	<select id="findAllUser" resultType="ls.es.samples.entity.CasUserPub">
+		select
+		<include refid="Base_Column_List" />
+		from cas_user_pub u
+		LEFT JOIN cas_org_pub o ON u.org_id = o.org_id 
+		where o.checked_status != 2 and (u.user_type = 1 OR u.user_type IS NULL)
+	</select>
+</mapper>

@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface CommonService {
 
+
+	/**
+	 * 测试dubbo
+	 */
+	String testDubbo();
+
 	/**
 	 * 初始化搜索索引
 	 */
